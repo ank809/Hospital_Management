@@ -1,6 +1,7 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:get/get.dart';
 import 'package:hospital_app/view/screens/company_screen.dart';
+import 'package:hospital_app/view/screens/home.dart';
 import 'package:hospital_app/view/screens/hospital_screen.dart';
 import 'package:hospital_app/view/screens/patient.dart';
 
@@ -24,8 +25,20 @@ class Auth extends GetxController{
     collectionReference.where('hospital_id', isEqualTo: hospitalId).where('cvv', isEqualTo: cvv).get().then((QuerySnapshot snapshot) {
       if(snapshot.docs.isNotEmpty){
         Get.snackbar('Successfully Logged in', '');
-        Get.offAll(HospitalScreen());
+        Get.offAll(HospitalScreen(hospital_id: hospitalId));
       }
+      else{
+        Get.snackbar('Incorrect details', '');
+      }
+    });
+  }
+  void loginDoctor(String hospitalId, String doctorId,String cvv){
+    CollectionReference collectionReference= FirebaseFirestore.instance.collection('doctors');
+    collectionReference.where('hospital_id', isEqualTo: hospitalId). where('doctor_id', isEqualTo: doctorId).where('cvv', isEqualTo: cvv).get().then((QuerySnapshot snapshot) {
+      if(snapshot.docs.isNotEmpty){
+        Get.snackbar('Successfully Logged in', '');
+        Get.offAll(HomePage());
+     }
       else{
         Get.snackbar('Incorrect details', '');
       }
@@ -36,7 +49,7 @@ class Auth extends GetxController{
     collectionReference.where('insurance_company_id', isEqualTo: companyId).where('cvv', isEqualTo: cvv).get().then((QuerySnapshot snapshot) {
       if(snapshot.docs.isNotEmpty){
         Get.snackbar('Successfully Logged in', '');
-        Get.offAll(CompanyScreen());
+        Get.offAll(const CompanyScreen());
       }
       else{
         Get.snackbar('Incorrect details', '');

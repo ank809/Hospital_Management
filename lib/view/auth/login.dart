@@ -24,7 +24,7 @@ class _LoginPageState extends State<LoginPage> {
         width: MediaQuery.of(context).size.width,
         color: const Color.fromARGB(255, 254, 78, 89),
         child: ListView(
-          padding: const EdgeInsets.all(16.0),
+          padding: const EdgeInsets.all(13.0),
           children: [
             Container(
               height: MediaQuery.of(context).size.height * 0.2,
@@ -48,12 +48,13 @@ class _LoginPageState extends State<LoginPage> {
               ),
             ),
             Container(
-              margin: const EdgeInsets.all(15.0),
-              padding: const EdgeInsets.all(10.0),
+              margin: const EdgeInsets.all(10.0),
+              //padding: const EdgeInsets.all(8.0),
+              width: MediaQuery.of(context).size.width,
               child: Column(
                 children: [
                   Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceAround,
+                    // mainAxisAlignment: MainAxisAlignment.spaceAround,
                     children: [
                       ElevatedButton(
                         onPressed: () {
@@ -70,6 +71,7 @@ class _LoginPageState extends State<LoginPage> {
                               color: Color.fromARGB(255, 254, 78, 89)),
                         ),
                       ),
+                      SizedBox(width: 3.5,),
                       ElevatedButton(
                         onPressed: () {
                           setState(() {
@@ -84,6 +86,7 @@ class _LoginPageState extends State<LoginPage> {
                               color: Color.fromARGB(255, 254, 78, 89)),
                         ),
                       ),
+                      SizedBox(width: 3.5,),
                       ElevatedButton(
                         onPressed: () {
                           setState(() {
@@ -107,7 +110,7 @@ class _LoginPageState extends State<LoginPage> {
                         : (whoisLogin == 'hospital')
                             ? _hospitalController
                             : _insurance_companyController,
-                    keyboardType: TextInputType.number,
+                    // keyboardType: TextInputType.number,
                     decoration: InputDecoration(
                       labelText: (whoisLogin =='patient')? 'Card Number':(whoisLogin=='hospital')?'Hospital Id':'Insurance Company Id',
                       labelStyle: const TextStyle(
@@ -120,6 +123,7 @@ class _LoginPageState extends State<LoginPage> {
                   const SizedBox(height: 25.0),
                   TextFormField(
                     controller: _cvvController,
+                    keyboardType: TextInputType.number,
                     decoration: const InputDecoration(
                       labelText: 'Enter the CVV code',
                       labelStyle: TextStyle(
