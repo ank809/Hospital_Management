@@ -4,6 +4,7 @@ import 'package:hospital_app/view/screens/company_screen.dart';
 import 'package:hospital_app/view/screens/home.dart';
 import 'package:hospital_app/view/screens/hospital_screen.dart';
 import 'package:hospital_app/view/screens/patient.dart';
+import 'package:hospital_app/view/screens/search_patient.dart';
 
 class Auth extends GetxController{
   static Auth instance= Get.find();
@@ -37,7 +38,7 @@ class Auth extends GetxController{
     collectionReference.where('hospital_id', isEqualTo: hospitalId). where('doctor_id', isEqualTo: doctorId).where('cvv', isEqualTo: cvv).get().then((QuerySnapshot snapshot) {
       if(snapshot.docs.isNotEmpty){
         Get.snackbar('Successfully Logged in', '');
-        Get.offAll(HomePage());
+        Get.offAll(SearchPatient());
      }
       else{
         Get.snackbar('Incorrect details', '');
