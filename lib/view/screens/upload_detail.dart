@@ -1,10 +1,15 @@
+import 'dart:developer';
 import 'dart:io';
-
+import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
+import 'package:hospital_app/controllers/patient_details.dart';
 import 'package:hospital_app/controllers/pick_image.dart';
+import 'package:hospital_app/controllers/upload_file.dart';
 
 class UploadDetails extends StatefulWidget {
-  const UploadDetails({Key? key});
+  final String cardno;
+  const UploadDetails({required this.cardno, Key? key});
 
   @override
   _UploadDetailsState createState() => _UploadDetailsState();
@@ -28,7 +33,8 @@ class _UploadDetailsState extends State<UploadDetails> {
               ),
               height: MediaQuery.of(context).size.height * 0.7,
               width: MediaQuery.of(context).size.width,
-              margin: const EdgeInsets.symmetric(horizontal: 25).copyWith(top: 20),
+              margin:
+                  const EdgeInsets.symmetric(horizontal: 25).copyWith(top: 20),
               child: imgpath != null
                   ? Image.file(
                       imgpath!,
@@ -52,20 +58,31 @@ class _UploadDetailsState extends State<UploadDetails> {
                       ),
                     ),
             ),
-           const SizedBox(
+            const SizedBox(
               height: 30.0,
             ),
             SizedBox(
-                height: 50.0,
-                width: 150.0,
-                child: ElevatedButton(
-                    style:
-                        ElevatedButton.styleFrom(backgroundColor: Colors.white),
-                    onPressed: () {},
-                    child: const Text(
-                      'Upload',
-                      style: TextStyle(fontSize: 20.0, color: Colors.pink),
-                    )))
+              height: 50.0,
+              width: 150.0,
+              child: ElevatedButton(
+                  style:
+                      ElevatedButton.styleFrom(backgroundColor: Colors.white),
+                  onPressed: () async {
+                    if (imgpath != null) {
+                      log(imgpath.toString());
+                      String? downurl = await UploadImages.upload_images(
+                          widget.cardno, imgpath!.path);
+                      if (downurl != null) {
+                        PatientDetails.update_details(widget.cardno, downurl);
+                        Navigator.pop(context);
+                      }
+                    }
+                  },
+                  child: const Text(
+                    'Upload',
+                    style: TextStyle(fontSize: 20.0, color: Colors.pink),
+                  )),
+            ),
           ],
         ),
       ),

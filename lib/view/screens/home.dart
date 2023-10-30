@@ -70,7 +70,7 @@ class _HomePageState extends State<HomePage> {
                       buildDetailRow(Icons.person, 'Address', item['address']),
                       const SizedBox(height: 20.0),
                       Container(
-                      child: item['prescription'] == "none" ? Text('No prescription') : Image.network('https://images.unsplash.com/photo-1575936123452-b67c3203c357?auto=format&fit=crop&q=80&w=2070&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D'),
+                      child: item['prescription'] == "none" ? Text('No prescription') : Image.network(item['prescription']),
                       ), 
                     ],
                   ),
@@ -87,7 +87,7 @@ class _HomePageState extends State<HomePage> {
         child: FloatingActionButton.extended(
           backgroundColor: Colors.grey,
           onPressed: () {
-            Get.to(UploadDetails());
+            Get.to(UploadDetails(cardno: widget.cardno));
           }, label: const Row(
           children: [
             Icon(Icons.upload_file, size: 30,
