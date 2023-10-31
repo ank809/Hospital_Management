@@ -1,15 +1,17 @@
 import 'dart:developer';
 import 'dart:io';
-import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:firebase_core/firebase_core.dart';
+// import 'package:cloud_firestore/cloud_firestore.dart';
+// import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
+import 'package:hospital_app/controllers/insurance_upload.dart';
 import 'package:hospital_app/controllers/patient_details.dart';
 import 'package:hospital_app/controllers/pick_image.dart';
 import 'package:hospital_app/controllers/upload_file.dart';
 
 class UploadDetails extends StatefulWidget {
   final String cardno;
-  const UploadDetails({required this.cardno, Key? key});
+  final bool isPatient;
+  const UploadDetails({required this.cardno, required this.isPatient, Key? key});
 
   @override
   _UploadDetailsState createState() => _UploadDetailsState();
@@ -73,7 +75,12 @@ class _UploadDetailsState extends State<UploadDetails> {
                       String? downurl = await UploadImages.upload_images(
                           widget.cardno, imgpath!.path);
                       if (downurl != null) {
+                        if(widget.isPatient){
+                          Update_Insurance.upload_image(widget.cardno, downurl, false);
+                        }
+                        else{
                         PatientDetails.update_details(widget.cardno, downurl);
+                        }
                         Navigator.pop(context);
                       }
                     }

@@ -14,7 +14,8 @@ class Auth extends GetxController{
     collectionReference.where('card_no', isEqualTo: cardno).where('cvv', isEqualTo: cvv).get().then((QuerySnapshot snapshot) {
       if(snapshot.docs.isNotEmpty){
         Get.snackbar('Succesfully Logged in', '');
-        Get.offAll(PatientScreen());
+        // Get.offAll(PatientScreen());
+        Get.offAll(HomePage(cardno: cardno, cvv: cvv, isPatient: true,));
       }
       else{
         Get.snackbar('Incorrect details', '');

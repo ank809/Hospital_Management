@@ -68,7 +68,8 @@ class _SearchPatientState extends State<SearchPatient> {
                   onPressed: () {
                     Get.to(HomePage(
                         cardno: _cardController.text,
-                        cvv: _cvvController.text));
+                        cvv: _cvvController.text,
+                        isPatient: false,));
                   },
                   child: const Text(
                     'Search',

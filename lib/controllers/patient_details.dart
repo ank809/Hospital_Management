@@ -21,7 +21,7 @@ class PatientDetails {
     QuerySnapshot snapshot = await reference.where('card_no', isEqualTo: card_no).get();
     if(snapshot.docs.isNotEmpty) {
         DocumentReference ref = snapshot.docs[0].reference;
-        await ref.update({'prescription' : imagepath}).then((value) {
+        await ref.update({'prescription' :  FieldValue.arrayUnion([imagepath])}).then((value) {
           Get.snackbar('Updated', 'Successfully updated');
         });
     } 

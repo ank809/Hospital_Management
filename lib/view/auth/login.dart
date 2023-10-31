@@ -123,7 +123,7 @@ class _LoginPageState extends State<LoginPage> {
                   const SizedBox(height: 25.0),
                   TextFormField(
                     controller: _cvvController,
-                    keyboardType: TextInputType.number,
+                    //keyboardType: TextInputType.number,
                     decoration: const InputDecoration(
                       labelText: 'Enter the CVV code',
                       labelStyle: TextStyle(
