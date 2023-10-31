@@ -1,3 +1,4 @@
+import 'dart:developer';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:get/get.dart';
 import 'package:hospital_app/model/data.dart';
@@ -18,4 +19,27 @@ class Update_Insurance{
     }
   }
 
-}
+  // fetching the data
+  static Stream<QuerySnapshot> getdata(){
+    return FirebaseFirestore.instance.collection('insurance_company_data').snapshots();
+  }
+
+  // update the data
+  static void update_data(String cardno) async {
+    CollectionReference reference= FirebaseFirestore.instance.collection('insurance_company_data');
+    // get the data of all where the condition is being satisfied
+    QuerySnapshot snapshot = await reference.where('card_no', isEqualTo: cardno).get();
+    if(snapshot.docs.isNotEmpty) {
+        DocumentReference ref = snapshot.docs[0].reference;
+        await ref.update({'isVerified' : true}).then((value) {
+          Get.snackbar('Verified', 'Image Verified');
+        });
+    } 
+    else {
+      log('Document Empty');
+    }
+  }
+  static deletedata(String documentID){
+    FirebaseFirestore.instance.collection('insurance_company_data').doc(documentID).delete();
+  }
+  }
