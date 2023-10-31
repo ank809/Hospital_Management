@@ -8,7 +8,11 @@ class HomePage extends StatefulWidget {
   final String cardno;
   final String cvv;
   final bool isPatient;
-  const HomePage({required this.cardno, required this.cvv,required this.isPatient, super.key});
+  const HomePage(
+      {required this.cardno,
+      required this.cvv,
+      required this.isPatient,
+      super.key});
 
   @override
   State<HomePage> createState() => _HomePageState();
@@ -81,27 +85,40 @@ class _HomePageState extends State<HomePage> {
                           //       ? const Text('No prescription')
                           //       : Image.network(item['prescription'][0]),
                           // )
+                          const Row(
+                            children: [
+                              Icon(Icons.note_alt_sharp,  color: Colors.pink),
+                              SizedBox(
+                                width: 10.0,
+                              ),
+                              Text('Prescription', style: TextStyle( color: Colors.pink, fontSize: 18.0,
+                fontWeight: FontWeight.bold),)
+                            ],
+                          ),
+                          SizedBox(height: 10.0,),
                           SizedBox(
                             width: MediaQuery.of(context).size.width,
                             child: item['prescription'] == "none"
                                 ? const Text('No prescription')
                                 : Column(
-                                  children: item['prescription']
-                                      .map<Widget>((imageUrl) {
-                                    return Container(
-                                      height: 550, // Increase the height for larger images
-                                      width: double.infinity, // Set the width to fill the screen
-                                      margin: const EdgeInsets.only(
-                                          bottom:
-                                              5.0), // Add spacing between images
-                                      child: Image.network(
-                                        imageUrl,
-                                        fit: BoxFit
-                                            .contain, // Adjust the fit to cover the entire container
-                                      ),
-                                    );
-                                  }).toList(),
-                                ),
+                                    children: item['prescription']
+                                        .map<Widget>((imageUrl) {
+                                      return Container(
+                                        height:
+                                            550, // Increase the height for larger images
+                                        width: double
+                                            .infinity, // Set the width to fill the screen
+                                        margin: const EdgeInsets.only(
+                                            bottom:
+                                                5.0), // Add spacing between images
+                                        child: Image.network(
+                                          imageUrl,
+                                          fit: BoxFit
+                                              .contain, // Adjust the fit to cover the entire container
+                                        ),
+                                      );
+                                    }).toList(),
+                                  ),
                           )
                         ],
                       ),
@@ -117,11 +134,13 @@ class _HomePageState extends State<HomePage> {
         child: FloatingActionButton.extended(
           backgroundColor: Colors.grey,
           onPressed: () {
-            if(widget.isPatient){
+            if (widget.isPatient) {
               Get.to(UploadDetails(cardno: widget.cardno, isPatient: true));
-            }
-            else{
-            Get.to(UploadDetails(cardno: widget.cardno, isPatient: false,));
+            } else {
+              Get.to(UploadDetails(
+                cardno: widget.cardno,
+                isPatient: false,
+              ));
             }
           },
           label: const Row(

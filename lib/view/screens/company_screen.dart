@@ -16,10 +16,11 @@ class _CompanyScreenState extends State<CompanyScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      appBar: AppBar(title: const Text('Unapproved data'), backgroundColor: Color.fromARGB(255, 203, 47, 99),),
       body: Container(
         height: MediaQuery.of(context).size.height,
         width: MediaQuery.of(context).size.width,
-        color: Colors.red,
+        color: Colors.grey,
         child: StreamBuilder<QuerySnapshot>(
           stream: Update_Insurance.getdata(),
           builder: (context, snapshot) {
@@ -41,37 +42,66 @@ class _CompanyScreenState extends State<CompanyScreen> {
             }
             List<DocumentSnapshot> document = snapshot.data!.docs;
             return ListView.builder(
-                itemCount: document.length, itemBuilder: (context, index) {
-                   final item = document[index].data() as Map<String, dynamic>;
-                   return Card(
-                    child: Column(
-                      children: [
-                        Row(children: [
-                          const Text('Patient\'s Card no:'),
-                          Text(item['card_no']),
-                        ],),
-                        Container(
-                          child: Image.network(item['imageURL'],
-                          fit: BoxFit.contain,),
-                        ),
+                itemCount: document.length,
+                itemBuilder: (context, index) {
+                  final item = document[index].data() as Map<String, dynamic>;
+                  return Card(
+                     margin: EdgeInsets.all(15.0),
+                    color: Color.fromARGB(255, 203, 47, 99),
+                    child: Padding(
+                      padding: const EdgeInsets.all(15.0),
+                      child: Column(
+                        children: [
                           Row(
-                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
                             children: [
-                              ElevatedButton(onPressed: (){
-                                Navigator.pop(context);
-                              }, child: Text('Decline')),
-                              ElevatedButton(onPressed: (){
-                                Update_Insurance.update_data(item['card_no']);
-                                PatientDetails.update_details(item['card_no'], item['imageURL']);
-                                Update_Insurance.deletedata(document[index].id);
-
-                              }, child: Text('Accept'))
+                              const Text(
+                                'Patient\'s Card no:  ',
+                                style: TextStyle(
+                                    fontSize: 22.0,
+                                    fontWeight: FontWeight.bold),
+                              ),
+                              Text(item['card_no'],
+                                  style: TextStyle(fontSize: 20.0)),
                             ],
                           ),
-
-                      ],
+                          SizedBox(
+                            height: 15.0,
+                          ),
+                          Container(
+                            height: MediaQuery.of(context).size.height * 0.4,
+                            child: Image.network(
+                              item['imageURL'],
+                              fit: BoxFit.contain,
+                            ),
+                          ),
+                          Row(
+                            mainAxisAlignment: MainAxisAlignment.spaceAround,
+                            children: [
+                              ElevatedButton(
+                                style: ElevatedButton.styleFrom(backgroundColor: Colors.white),
+                                  onPressed: () {
+                                    // nothing
+                                    Update_Insurance.deletedata(
+                                        document[index].id);
+                                  },
+                                  child: Text('Decline', style: TextStyle(color: Colors.pink),)),
+                              ElevatedButton(
+                                style: ElevatedButton.styleFrom(backgroundColor: Colors.white),
+                                  onPressed: () {
+                                    Update_Insurance.update_data(
+                                        item['card_no']);
+                                    PatientDetails.update_details(
+                                        item['card_no'], item['imageURL']);
+                                    Update_Insurance.deletedata(
+                                        document[index].id);
+                                  },
+                                  child: Text('Accept',  style: TextStyle(color: Colors.pink)))
+                            ],
+                          ),
+                        ],
+                      ),
                     ),
-                   );
+                  );
                 });
           },
         ),

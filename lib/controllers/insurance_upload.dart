@@ -40,6 +40,8 @@ class Update_Insurance{
     }
   }
   static deletedata(String documentID){
-    FirebaseFirestore.instance.collection('insurance_company_data').doc(documentID).delete();
+    FirebaseFirestore.instance.collection('insurance_company_data').doc(documentID).delete().then((value) {
+      Get.snackbar('Deleted', 'Image deleted successfully');
+    });
   }
   }
